@@ -13,8 +13,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
-from webapp.tasks import add
-
+from webapp.tasks import add ,send_simple_message
 
 
 @login_required(login_url='/polls/loginid/')
@@ -207,6 +206,7 @@ def image(request):
 
 def getImage(request):
     num = add.delay(19,9)
+    send_simple_message.delay()
     print (num)
     return render(request, 'polls/indexreact.html')
 
@@ -286,6 +286,6 @@ def questionadd(request):
     return JsonResponse(data = jsonDict , safe =  False)
     
 
-       
+
         
 
